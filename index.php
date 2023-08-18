@@ -2,4 +2,4 @@
 
 include 'vendor/autoload.php';
 
-echo \SSF\ORM\Model\User::id();
+$user = new \SSF\ORM\Model\User(['id' => 1, 'username' => 'test', 'email' => 'test@email.com']);

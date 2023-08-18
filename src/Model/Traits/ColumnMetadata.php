@@ -30,6 +30,13 @@ trait ColumnMetadata
                 $attributes = $property->getAttributes(Column::class, ReflectionAttribute::IS_INSTANCEOF);
 
                 if (!empty($attributes)) {
+
+                    $column = $attributes[0]->newInstance();
+
+                    if (!$column->alias && $column->name !== $property->getName()) {
+                        $column->alias = $property->getName();
+                    }
+
                     static::$columMetadata[$class][$property->getName()] = $attributes[0]->newInstance();
                 }
             }

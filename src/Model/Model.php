@@ -4,6 +4,7 @@ namespace SSF\ORM\Model;
 
 use InvalidArgumentException;
 use SSF\ORM\Model\Attr\ColumnKey;
+use SSF\ORM\Model\Traits\ColumnAccess;
 use SSF\ORM\Model\Traits\ColumnMetadata;
 use SSF\ORM\Model\Traits\GetsPropertyDefault;
 use SSF\ORM\Util\Str;
@@ -11,6 +12,7 @@ use SSF\ORM\Util\Str;
 abstract class Model
 {
     use ColumnMetadata;
+    use ColumnAccess;
     use GetsPropertyDefault;
 
     /**
@@ -77,6 +79,15 @@ abstract class Model
     public static function hasColumn(string $name): bool
     {
         return in_array($name, static::columns());
+    }
+
+    public function getColumn(string $name): mixed
+    {
+        if (static::hasColumn($name)) {
+            return $this->$name;
+        }
+
+        return null;
     }
 
     /**
